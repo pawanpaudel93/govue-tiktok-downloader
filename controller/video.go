@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"path"
@@ -23,31 +22,33 @@ func init() {
 }
 
 // DownloadVideo - Download Tiktok video
-func DownloadVideo(url string) (string, error) {
-	var videoPath string
+func DownloadVideo(url string) (string, string, error) {
+	var videoPath, videoInfo string
 	video := tiktok.Video{URL: url, BaseDIR: BaseDIR}
 	err := video.FetchInfo()
 	if err == nil {
 		videoPath, err = video.Download()
+		videoInfo, _ = video.GetInfo()
 	}
-	return videoPath, err
+	return videoPath, videoInfo, err
 }
 
 func DownloadTiktokVideo(ctx *gin.Context) {
 	var video Video
 	ctx.BindJSON(&video)
-	videoPath, err := DownloadVideo(video.URL)
+	videoPath, videoInfo, err := DownloadVideo(video.URL)
 	if err != nil {
-		fmt.Println(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": "Video download failed. Try again!!!",
-			"url":   videoPath,
+			"error":     "Video download failed. Try again!!!",
+			"fName":     "",
+			"videoInfo": "",
 		})
 	} else {
 		splitPath := strings.Split(videoPath, "/")
 		ctx.JSON(http.StatusOK, gin.H{
-			"error": false,
-			"url":   splitPath[len(splitPath)-1],
+			"error":     false,
+			"fName":     splitPath[len(splitPath)-1],
+			"videoInfo": videoInfo,
 		})
 	}
 }

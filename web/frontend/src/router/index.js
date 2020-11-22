@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/store/index";
 import Home from "@/views/Home";
 import Profile from "@/views/Profile";
 
@@ -16,13 +17,13 @@ const routes = [
     name: "Download",
         component: () =>
         import("@/views/Download"),
-        // beforeEnter: (to, from, next) => {
-        //   if (store.getters.isAuthenticated) {
-        //     next('/');
-        //   } else {
-        //     next();
-        //   }
-        // }
+        beforeEnter: (to, from, next) => {
+          if (store.getters.getVideo.fileName == "") {
+            next('/');
+          } else {
+            next();
+          }
+        }
   },
   {
     path: "/profile",
@@ -37,6 +38,12 @@ const routes = [
         //   }
         // }
   },
+  {
+    path: "*",
+    beforeEnter: (to, from, next) => {
+          window.location = "/"
+    }
+  }
 ];
 
 const router = new VueRouter({

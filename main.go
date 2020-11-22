@@ -11,5 +11,5 @@ var Router *gin.Engine
 
 func main() {
 	routes.CreateURLMappings()
-	routes.Router.Run(":8080")
+	routes.Router.Run(":8000")
 }

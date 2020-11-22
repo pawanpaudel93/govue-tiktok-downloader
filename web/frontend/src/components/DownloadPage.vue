@@ -6,7 +6,7 @@
         <v-card-text>
             <v-form ref="form" lazy-validation>
                 <v-text-field
-                    v-model="URL"
+                    v-model="link"
                     :label="textLabel"
                     required
                     :error-messages="URLErrors"
@@ -35,8 +35,8 @@
 </template>
     
 <script>
-    import { validationMixin } from 'vuelidate'
-    import { required, url } from 'vuelidate/lib/validators'
+    import { validationMixin } from "vuelidate"
+    import { required, url } from "vuelidate/lib/validators"
 
     export default {
         name: "DownloadPage",
@@ -51,6 +51,7 @@
                 this.$v.$touch()
                 if (this.$v.$dirty && !this.$v.$error) {
                     this.loading = true;
+                    this.$store.dispatch('setVIdeo');
                 }
                 
             }
@@ -69,6 +70,14 @@
                 !this.$v.URL.url && errors.push('Must be valid URL')
                 !this.$v.URL.required && errors.push(`${this.textLabel} is required!!!`)
                 return errors
+            },
+            link: {
+                get() {
+                    return this.URL;
+                },
+                set(newValue) {
+                    this.$store.commit("SET_VIDEO_URL", newValue);
+                }
             }
         }
     }
