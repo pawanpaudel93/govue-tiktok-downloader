@@ -1,5 +1,5 @@
 <template>
-    <DownloadPage :URL="video.URL" :title="title" :textLabel="textLabel"/>
+    <DownloadPage :URL="video.URL" :title="title" :textLabel="textLabel" :error="video.error"/>
 </template>
     
 <script>
@@ -20,6 +20,10 @@
             ...mapGetters({
                 "video": "getVideo",
             })
+        },
+        mounted() {
+            this.$store.commit("SET_VIDEO_URL", "")
+            this.$store.commit("SET_VIDEO_ERROR", false)
         },
     }
 </script>

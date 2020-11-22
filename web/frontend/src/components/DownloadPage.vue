@@ -1,5 +1,5 @@
 <template>
-    <v-card width="800" class="mx-auto mt-5" outlined shaped tile elevation="6">
+    <v-card :width="width" class="mx-auto mt-5" outlined shaped tile elevation="6">
         <v-card-title>
             <p>{{ title }}</p>
         </v-card-title>
@@ -17,6 +17,16 @@
             </v-form>
         </v-card-text>
         <v-divider></v-divider>
+        <v-chip
+            v-if="error && chip"
+            class="ma-2"
+            close
+            color="red"
+            text-color="white"
+            @click:close="chip = false"
+        >
+            {{error}}
+        </v-chip>
         <v-card-actions>
             <v-row align="center" justify="space-around">
                 <v-btn
@@ -44,15 +54,16 @@
         name: "DownloadPage",
         data() {
             return {
-                loading: false,
+                chip: true,
             }
         },
-        props: ["URL", "title", "textLabel"],
+        props: ["URL", "title", "textLabel", "error"],
         methods: {
             submit() {
                 this.$v.$touch()
                 if (this.$v.$dirty && !this.$v.$error) {
-                    this.loading = true;
+                    this.chip = true;
+                    this.$store.commit("SET_LOADING", true);
                     if (this.$route.name === "Profile") {
                         this.$store.dispatch('setProfile');
                     } else {
@@ -87,6 +98,23 @@
                     } else {
                         this.$store.commit("SET_VIDEO_URL", newValue);
                     }
+                }
+            },
+            width() {
+                switch (this.$vuetify.breakpoint.name) {
+                    case 'xs': return 340
+                    case 'sm': return 600
+                    case 'md': return 700
+                    case 'lg': return 800
+                    case 'xl': return 1000
+                }
+            },
+            loading: {
+                get() {
+                    return this.$store.getters.getLoading;
+                },
+                set(newValue) {
+                    this.$store.commit("SET_LOADING", newValue);
                 }
             }
         }

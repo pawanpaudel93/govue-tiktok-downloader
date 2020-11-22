@@ -7,17 +7,20 @@ const video = {
         URL: "",
         fileName: "",
         Info: "",
+        error: false
       },
-      error: false
   },
   mutations: {
     'SET_VIDEO' (state, data) {
       state.video.fileName = data.fileName;
-      state.error = data.error;
-      state.video.Info = JSON.parse(data.videoInfo);
+      state.video.error = data.error;
+      state.video.Info = data.videoInfo ? JSON.parse(data.videoInfo):"";
     },
     'SET_VIDEO_URL' (state, videoURL) {
       state.video.URL = videoURL;
+    },
+    'SET_VIDEO_ERROR' (state, error) {
+      state.video.error = error;
     }
   },
   actions: {
@@ -26,12 +29,14 @@ const video = {
           URL: state.video.URL,
       })
         .then(res => {
-            console.log(res.data);
+          console.log(res.data);
           commit('SET_VIDEO', res.data)
+          state.loading = false;
           router.push({name: "DownloadVideo"})
         })
         .catch(error => {
-          console.log(error)
+          commit('SET_VIDEO', error.response.data)
+          state.loading = false;
         })
     },
   },

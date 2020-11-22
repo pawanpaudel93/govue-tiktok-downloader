@@ -1,5 +1,5 @@
 <template>
-    <DownloadPage :URL="profile.URL" :title="title" :textLabel="textLabel"/>
+    <DownloadPage :URL="profile.URL" :title="title" :textLabel="textLabel" :error="profile.error"/>
 </template>
     
 <script>
@@ -20,6 +20,10 @@
             ...mapGetters({
                 "profile": "getProfile"
             })
-        }
+        },
+         mounted() {
+            this.$store.commit("SET_PROFILE_URL", "")
+            this.$store.commit("SET_PROFILE_ERROR", false)
+        },
     }
 </script>
