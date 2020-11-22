@@ -37,17 +37,17 @@ func DownloadTiktokVideo(ctx *gin.Context) {
 	var video Video
 	ctx.BindJSON(&video)
 	videoPath, videoInfo, err := DownloadVideo(video.URL)
-	if err != nil {
+	if err != nil || videoInfo == "" {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error":     "Video download failed. Try again!!!",
-			"fName":     "",
+			"fileName":  "",
 			"videoInfo": "",
 		})
 	} else {
 		splitPath := strings.Split(videoPath, "/")
 		ctx.JSON(http.StatusOK, gin.H{
 			"error":     false,
-			"fName":     splitPath[len(splitPath)-1],
+			"fileName":  splitPath[len(splitPath)-1],
 			"videoInfo": videoInfo,
 		})
 	}

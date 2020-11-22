@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/buger/jsonparser"
 	"github.com/gin-gonic/gin"
 	"github.com/pawanpaudel93/go-tiktok-downloader/tiktok"
 )
@@ -26,7 +27,8 @@ func DownloadTiktokPP(ctx *gin.Context) {
 	var profile Profile
 	ctx.BindJSON(&profile)
 	profileJSON, err := DownloadPhoto(profile.URL)
-	if err != nil {
+	username, err := jsonparser.GetString([]byte(profileJSON), "user", "uniqueId")
+	if err != nil || username == "" {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error":       "Getting Profile Picture failed. Try again!!!",
 			"profileInfo": "",
