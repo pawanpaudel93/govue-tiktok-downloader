@@ -1,31 +1,44 @@
 import axios from 'axios';
+import router from '@/router/index';
 
 const profile = {
-//   state: {
-//     videoURL: "",
-//     videlFileName: "",
-//   },
-//   mutations: {
-//     'SET_VIDEO_FNAME' (state, videoFilename) {
-//       state.videoFilename = videoFilename;
-//     },
-//   },
-//   actions: {
-//     setCountries ({commit}) {
-//       axios.get('/api/iptv/titles/country/')
-//         .then(res => {
-//           commit('SET_COUNTRIES', res.data.country)
-//         })
-//         .catch(error => {
-//           // console.log(error)
-//         })
-//     },
-//   },
-//   getters: {
-//     getCountries (state) {
-//       return state.countries;
-//     },
-//   }
+  state: {
+      profile: {
+        URL: "",
+        Info: "",
+      },
+      error: false
+  },
+  mutations: {
+    'SET_PROFILE' (state, data) {
+      state.error = data.error;
+      state.profile.Info = JSON.parse(data.profileInfo);
+    },
+    'SET_PROFILE_URL' (state, profileURL) {
+        state.profile.URL = profileURL;
+      }
+  },
+  actions: {
+    setProfile ({commit, state}) {
+        axios.post('/api/v1/photo', {
+            URL: state.profile.URL,
+        })
+          .then(res => {
+              console.log(res.data.profileInfo);
+            commit('SET_PROFILE', res.data)
+            console.log(state.profile)
+            router.push({name: "DownloadPhoto"})
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
+  },
+  getters: {
+    getProfile (state) {
+      return state.profile;
+    },
+  }
 };
 
 export default profile

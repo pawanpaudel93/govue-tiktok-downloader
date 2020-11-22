@@ -8,9 +8,11 @@
                 <v-text-field
                     v-model="link"
                     :label="textLabel"
-                    required
                     :error-messages="URLErrors"
                     @blur="$v.URL.$touch()"
+                    outlined
+                    required
+                    clearable
                 />
             </v-form>
         </v-card-text>
@@ -51,7 +53,11 @@
                 this.$v.$touch()
                 if (this.$v.$dirty && !this.$v.$error) {
                     this.loading = true;
-                    this.$store.dispatch('setVIdeo');
+                    if (this.$route.name === "Profile") {
+                        this.$store.dispatch('setProfile');
+                    } else {
+                        this.$store.dispatch('setVIdeo');
+                    }
                 }
                 
             }
@@ -76,7 +82,11 @@
                     return this.URL;
                 },
                 set(newValue) {
-                    this.$store.commit("SET_VIDEO_URL", newValue);
+                    if (this.$route.name === "Profile") {
+                        this.$store.commit("SET_PROFILE_URL", newValue);
+                    } else {
+                        this.$store.commit("SET_VIDEO_URL", newValue);
+                    }
                 }
             }
         }

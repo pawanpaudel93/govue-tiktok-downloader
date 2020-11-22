@@ -1,9 +1,10 @@
 <template>
-    <DownloadPage :URL="URL" :title="title" :textLabel="textLabel"/>
+    <DownloadPage :URL="profile.URL" :title="title" :textLabel="textLabel"/>
 </template>
     
 <script>
     import DownloadPage from "@/components/DownloadPage"
+    import {mapGetters} from "vuex"
     export default {
         name: "Profile",
         components: {
@@ -11,10 +12,14 @@
         },
         data() {
             return {
-                URL: "",
                 title: "Enter Tiktok user URL",
                 textLabel: "Tiktok User URL"
             }
         },
+        computed: {
+            ...mapGetters({
+                "profile": "getProfile"
+            })
+        }
     }
 </script>

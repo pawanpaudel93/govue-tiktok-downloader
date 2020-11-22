@@ -14,9 +14,9 @@ const routes = [
   },
   {
     path: "/download",
-    name: "Download",
+    name: "DownloadVideo",
         component: () =>
-        import("@/views/Download"),
+        import("@/views/DownloadVideo"),
         beforeEnter: (to, from, next) => {
           if (store.getters.getVideo.fileName == "") {
             next('/');
@@ -30,6 +30,12 @@ const routes = [
     name: "Profile",
         component: () =>
         import("@/views/Profile"),
+  },
+  {
+    path: "/download/profile-picture",
+    name: "DownloadPhoto",
+        component: () =>
+        import("@/views/DownloadPhoto"),
         // beforeEnter: (to, from, next) => {
         //   if (store.getters.isAuthenticated) {
         //     next('/');

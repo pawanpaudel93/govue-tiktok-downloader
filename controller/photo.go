@@ -18,23 +18,23 @@ func DownloadPhoto(url string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	photoJSON, err := profile.GetPPInfo()
-	return photoJSON, err
+	profileJSON, err := profile.GetProfileInfo()
+	return profileJSON, err
 }
 
 func DownloadTiktokPP(ctx *gin.Context) {
 	var profile Profile
 	ctx.BindJSON(&profile)
-	photoJSON, err := DownloadPhoto(profile.URL)
+	profileJSON, err := DownloadPhoto(profile.URL)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": "Getting Profile Picture failed. Try again!!!",
-			"photo": photoJSON,
+			"error":       "Getting Profile Picture failed. Try again!!!",
+			"profileInfo": "",
 		})
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{
-			"message": "test successful",
-			"photo":   photoJSON,
+			"error":       false,
+			"profileInfo": profileJSON,
 		})
 	}
 }

@@ -4,44 +4,44 @@
             <v-img
                 max-height="500"
                 max-width="300"
-                :src="video.videoInfo.video.cover"
+                :src="video.Info.video.cover"
             ></v-img>
         </v-row>
         <v-divider></v-divider>
         <v-card-title><h3 class="text-center">Video Information</h3></v-card-title>
         <v-divider></v-divider>
         <v-card-text>
-            <p>{{video.videoInfo.video.description}}</p><br>
+            <p>{{video.Info.video.description}}</p><br>
+            <v-icon
+                color="indigo"
+                dark
+                right
+            >mdi-link</v-icon> <a :href="video.URL">Tiktok Video Link</a><br>
+            <v-icon
+                color="indigo"
+                dark
+                right
+            >mdi-clock-outline</v-icon> {{new Date(video.Info.video.createdTime*1000)}}<br>
             <v-icon
                 color="red"
                 dark
                 right
-            >mdi-link</v-icon>: <a :href="video.videoInfo.video.URL">Tiktok Video Link</a><br>
+            >mdi-heart-multiple</v-icon> {{video.Info.video.likes}}<br>
             <v-icon
-                color="red"
+                color="indigo"
                 dark
                 right
-            >mdi-clock-outline</v-icon>: {{new Date(video.videoInfo.video.createdTime*1000)}}<br>
+            > mdi-comment-processing</v-icon> {{video.Info.video.comments}}<br>
             <v-icon
-                color="red"
+                color="indigo"
                 dark
                 right
-            >mdi-heart-multiple</v-icon>: {{video.videoInfo.video.likes}}<br>
+            > mdi-share-variant</v-icon> {{video.Info.video.shares}}<br>
             <v-icon
-                color="red"
+                color="indigo"
                 dark
                 right
-            > mdi-comment-processing</v-icon>: {{video.videoInfo.video.comments}}<br>
-            <v-icon
-                color="red"
-                dark
-                right
-            > mdi-share-variant</v-icon>: {{video.videoInfo.video.shares}}<br>
-            <v-icon
-                color="red"
-                dark
-                right
-            > mdi-play-circle</v-icon>: {{video.videoInfo.video.played}}<br>
+            > mdi-play-circle</v-icon> {{video.Info.video.played}}<br>
         </v-card-text>
         <v-card-actions>
             <v-row align="center" justify="space-around">
@@ -56,7 +56,7 @@
 <script>
     import { mapGetters } from 'vuex';
     export default {
-        name: "Download",
+        name: "DownloadVideo",
         computed: {
             ...mapGetters({
                 "video": "getVideo",

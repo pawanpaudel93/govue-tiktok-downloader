@@ -6,13 +6,15 @@ const video = {
       video: {
         URL: "",
         fileName: "",
-        videoInfo: "",
-      }
+        Info: "",
+      },
+      error: false
   },
   mutations: {
     'SET_VIDEO' (state, data) {
       state.video.fileName = data.fileName;
-      state.video.videoInfo = JSON.parse(data.videoInfo);
+      state.error = data.error;
+      state.video.Info = JSON.parse(data.videoInfo);
     },
     'SET_VIDEO_URL' (state, videoURL) {
       state.video.URL = videoURL;
@@ -26,7 +28,7 @@ const video = {
         .then(res => {
             console.log(res.data);
           commit('SET_VIDEO', res.data)
-          router.push({name: "Download"})
+          router.push({name: "DownloadVideo"})
         })
         .catch(error => {
           console.log(error)
