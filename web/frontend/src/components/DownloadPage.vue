@@ -103,7 +103,7 @@
             },
             width() {
                 switch (this.$vuetify.breakpoint.name) {
-                    case 'xs': return 340
+                    case 'xs': return 300
                     case 'sm': return 600
                     case 'md': return 700
                     case 'lg': return 800

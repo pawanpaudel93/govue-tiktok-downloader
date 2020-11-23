@@ -1,6 +1,6 @@
 <template>
     <v-layout row justify-center>
-      <v-toolbar dark color="indigo darken-1" class="hidden-xs-and-down">
+      <v-toolbar dark color="indigo darken-1" class="d-none d-sm-flex">
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
@@ -83,12 +83,12 @@ export default {
         nav: [
           {
             icon: 'home',
-            text: 'Video Download',
+            text: 'Video',
             to: "/",
           },
           {
             icon: 'account-circle',
-            text: 'Profile Picture Download',
+            text: 'Profile Picture',
             to: "/profile",
           },
         ]
