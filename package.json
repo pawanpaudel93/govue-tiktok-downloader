@@ -1,0 +1,12 @@
+{
+    "name": "tiktok",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "serve": "vue-cli-service serve",
+      "build": "vue-cli-service build",
+      "lint": "vue-cli-service lint",
+      "heroku-postbuild": "go build -o bin/govue-tiktok-downloader -v . && cd web/frontend && npm install && npm run build"
+    }
+  }
+  

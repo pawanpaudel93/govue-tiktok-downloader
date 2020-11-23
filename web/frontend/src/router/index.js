@@ -36,13 +36,13 @@ const routes = [
     name: "DownloadPhoto",
         component: () =>
         import("@/views/DownloadPhoto"),
-        // beforeEnter: (to, from, next) => {
-        //   if (store.getters.isAuthenticated) {
-        //     next('/');
-        //   } else {
-        //     next();
-        //   }
-        // }
+        beforeEnter: (to, from, next) => {
+          if (store.getters.getProfile.Info == "") {
+            next('/');
+          } else {
+            next();
+          }
+        }
   },
   {
     path: "*",
