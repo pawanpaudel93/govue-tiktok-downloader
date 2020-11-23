@@ -6,9 +6,9 @@ const profile = {
       profile: {
         URL: "",
         Info: "",
-        error: false
+        error: false,
+        loading: false
       },
-      loading: false
   },
   mutations: {
     'SET_PROFILE' (state, data) {
@@ -16,10 +16,10 @@ const profile = {
       state.profile.Info = data.profileInfo ? JSON.parse(data.profileInfo): "";
     },
     'SET_PROFILE_URL' (state, profileURL) {
-        state.profile.URL = profileURL;
+      state.profile.URL = profileURL;
     },
-    'SET_LOADING' (state, loading) {
-      state.loading = loading;
+    'SET_PROFILE_LOADING' (state, loading) {
+      state.profile.loading = loading;
     },
     'SET_PROFILE_ERROR' (state, error) {
       state.profile.error = error;
@@ -32,12 +32,12 @@ const profile = {
         })
           .then(res => {
             commit('SET_PROFILE', res.data)
-            state.loading = false;
+            state.profile.loading = false;
             router.push({name: "DownloadPhoto"})
           })
           .catch(error => {
             commit('SET_PROFILE', error.response.data)
-            state.loading = false;
+            state.profile.loading = false;
           })
       },
   },
@@ -45,9 +45,6 @@ const profile = {
     getProfile (state) {
       return state.profile;
     },
-    getLoading (state) {
-      return state.loading;
-    }
   }
 };
 

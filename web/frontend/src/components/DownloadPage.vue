@@ -63,10 +63,11 @@
                 this.$v.$touch()
                 if (this.$v.$dirty && !this.$v.$error) {
                     this.chip = true;
-                    this.$store.commit("SET_LOADING", true);
                     if (this.$route.name === "Profile") {
+                        this.$store.commit("SET_PROFILE_LOADING", true);
                         this.$store.dispatch('setProfile');
                     } else {
+                        this.$store.commit("SET_VIDEO_LOADING", true);
                         this.$store.dispatch('setVIdeo');
                     }
                 }
@@ -111,10 +112,18 @@
             },
             loading: {
                 get() {
-                    return this.$store.getters.getLoading;
+                    if (this.$route.name === "Profile") {
+                        return this.$store.getters.getProfile.loading;
+                    } else {
+                        return this.$store.getters.getVideo.loading;
+                    }
                 },
                 set(newValue) {
-                    this.$store.commit("SET_LOADING", newValue);
+                    if (this.$route.name === "Profile") {
+                        this.$store.commit("SET_PROFILE_LOADING", newValue);
+                    } else {
+                        this.$store.commit("SET_VIDEO_LOADING", newValue);
+                    }
                 }
             }
         }

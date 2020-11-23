@@ -7,7 +7,8 @@ const video = {
         URL: "",
         fileName: "",
         Info: "",
-        error: false
+        error: false,
+        loading: false
       },
   },
   mutations: {
@@ -19,6 +20,9 @@ const video = {
     'SET_VIDEO_URL' (state, videoURL) {
       state.video.URL = videoURL;
     },
+    'SET_VIDEO_LOADING' (state, loading) {
+      state.video.loading = loading;
+    },
     'SET_VIDEO_ERROR' (state, error) {
       state.video.error = error;
     }
@@ -29,14 +33,14 @@ const video = {
           URL: state.video.URL,
       })
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           commit('SET_VIDEO', res.data)
-          state.loading = false;
+          state.video.loading = false;
           router.push({name: "DownloadVideo"})
         })
         .catch(error => {
           commit('SET_VIDEO', error.response.data)
-          state.loading = false;
+          state.video.loading = false;
         })
     },
   },
